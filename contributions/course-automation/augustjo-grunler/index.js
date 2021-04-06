@@ -24,9 +24,10 @@ async function main() {
     
     const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
-    
+
     try {
       var files = await getChangedfiles(owner, repoName, issue_number, octokit)
+      console.log(files)
       files = files.filter(file => file.filename.includes('README.md'))
       files = files.filter(file => file.filename.includes('feedback'))
       let dir = files[0].filename.split('/')
