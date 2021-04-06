@@ -14,7 +14,9 @@ async function main() {
     console.log(`The event payload: ${payload}`);
     const owner = github.context.payload.repository.owner.login;
     console.log(`The owner of the repo is ${owner}`)
-    const dir = '/contributions/course-automation/augustjo-grunler'
+    const contents_url = github.context.payload.pull_request.base.repo.contents_url
+    console.log(`the URL or the contents is ${contents_url}`)
+    const dir = '**/feedback/**/'
 
     const branch = github.context.payload.pull_request.head.ref
 
