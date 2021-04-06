@@ -51,7 +51,7 @@ async function main() {
 
   
     //build comment body
-    var comment = createCommentBody(file.name, wordCount, wordCountReached, timeOfSubmission, deadline)
+    var comment = createCommentBody(file.name, path, wordCount, wordCountReached, timeOfSubmission, deadline)
     buildAndPostComment(issue_number,comment, octokit)
 
     changed_files = github.context.payload.pull_request.changed_files;
@@ -116,14 +116,14 @@ function getWordCountVerdict(wordCount, acceptableLimit, remarkableLimit) {
   return verdict;
 }
 
-//TODO: add time aspect
-function createCommentBody(filename, wc, verdict, timeOfSubmission, deadline ) {
-  let comment = 'Checking wordcount and time of submission for feedback given\n';
-  let fileString = `File checked: ${filename}. \n`;
+function createCommentBody(filename, path, wc, verdict, timeOfSubmission, deadline ) {
+  let comment = 'Checking word count and time of submission for feedback given\n';
+  let fileString = `File checked: ${filename}. (${path}) \n`;
   let wordCountString = `Feedback is substantiated: ${verdict} (${wc} words) \n`;
   //check time of submission
   let timeApproved = checkDeadline(deadline,timeOfSubmission)
-  let timeCheckString = timeApproved? `The submission is delivered before the deadline \n` : `the submission is delivered after the deadline\n`
+  let timeCheckString = timeApproved? `The submission is delivered before the deadline` : `the submission is delivered after the deadline`
+  timeCheckString += ` (submitted at: ${timeofsubmission.toString()}) \n` 
   comment = comment + fileString + wordCountString +  timeCheckString;
   return comment;
 }
