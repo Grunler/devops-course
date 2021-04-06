@@ -11,7 +11,7 @@ async function main() {
     const octokit = github.getOctokit(token);
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
+    //console.log(`The event payload: ${payload}`);
     const owner = github.context.payload.repository.owner.login;
     console.log(`The owner of the repo is ${owner}`)
     const contents_url = github.context.payload.pull_request.base.repo.contents_url
@@ -25,6 +25,11 @@ async function main() {
     
     const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
+
+    const files = await getChangedfiles(owner, repoName, issue_number, octokit)
+    console.log(files)
+
+
     // Extract The file with the feedback
     var file = await getReadme(octokit,owner,repoName,dir,branch)
     const path = file.path
@@ -50,6 +55,20 @@ function getMDwordCount(string) {
   str = string.replace(/([#*>+|/_@±/\[\]\\{}<-`]+)/g,"");
   str = str.replace(/(\s)+/g," ");
   return str.split(" ").length;
+}
+
+var getChangedfiles = function(owner,repo,issue_number,octokit) {
+  return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/files', {
+    owner: owner,
+    repo: repo,
+    pull_number: issue_number
+  }).then(files => {
+    resolve(files)
+  }).catch(err =>{
+    console.log(err)
+    reject(err)
+  })
+})
 }
 
 var getReadme = function(octokit, owner, repo, dir, callingBranch='master') {
