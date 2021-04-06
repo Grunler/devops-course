@@ -26,7 +26,8 @@ async function main() {
     const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
 
-    const files = await getChangedfiles(owner, repoName, issue_number, octokit)
+    var files = await getChangedfiles(owner, repoName, issue_number, octokit)
+    files = files.filter(file => file.filename.contains('README.md'))
     console.log(files)
 
 
@@ -63,7 +64,7 @@ var getChangedfiles = function(owner,repo,issue_number,octokit) {
     repo: repo,
     pull_number: issue_number
   }).then(files => {
-    resolve(files)
+    resolve(files.data)
   }).catch(err =>{
     console.log(err)
     reject(err)
