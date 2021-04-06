@@ -28,7 +28,7 @@ This means that if someone adds their feedback in the README (which they should)
 ## Usage
 ### workflow file
 To use the action create a file in your project (example `.github/workflows/feedbackcheck.yml`) and include these lines of code.
-````
+````yml
 name: Feedback-check
 on: 
   pull_request:
@@ -55,4 +55,4 @@ The inputs of the actions are:
 | Repo-token          | The token is necessary in order to make pr comments and get access to data from github                         | True     |
 | minimal-wordcount   | The minimal wordcount required to pass the check                                                               | True     |
 | remakable-wordcount | The wordcountlimit for whats considerd remarkable feedback                                                     | True     |
-| deadline            | The deadline of tasks that you are able to submit feedback on. Can be changed depending on different deadlines on later course offerings| True     |
+| deadline            | The deadline of tasks that you are able to submit feedback on. Can be changed depending on different deadlines on later course offerings. The format of the deadline should be ISO8601| True     |
