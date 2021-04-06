@@ -117,7 +117,7 @@ function getWordCountVerdict(wordCount, acceptableLimit, remarkableLimit) {
 }
 
 //TODO: add time aspect
-function createCommentBody(filename, wc, verdict, timeApproved, timeOfSubmission, deadline ) {
+function createCommentBody(filename, wc, verdict, timeOfSubmission, deadline ) {
   let comment = 'Checking wordcount and time of submission for feedback given';
   let fileString = `File checked: ${filename}. \n`;
   let wordCountString = `Feedback is substantiated: ${verdict} (${wc} words) \n`;
