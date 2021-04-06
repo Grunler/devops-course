@@ -2,12 +2,14 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 var atob = require('atob');
 
+
 async function main() {
   try {
     // `who-to-greet` input defined in action metadata file
     const token = core.getInput('repo-token');
     const minimalWordCountLimit = core.getInput('minimal-wordcount')
     const remarkableWordCountLimit = core.getInput('remarkable-wordcount')
+    const deadline = new Date(core.getInput('deadline'))
     const octokit = github.getOctokit(token);
 
     // Get the JSON webhook payload for the event that triggered the workflow
@@ -22,6 +24,8 @@ async function main() {
     issue_number = issue_number[issue_number.length-1]
     const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
+    let timeOfSubmission = github.context.payload.pull_request.head.repo.pushed_at
+    timeOfSubmission = new Date(timeOfSubmission)
 
     // get changed files from pullrequest
     var files = await getChangedfiles(owner, repoName, issue_number, octokit)
@@ -45,8 +49,9 @@ async function main() {
     var wordCount = getMDwordCount(rawText)
     var wordCountReached = getWordCountVerdict(wordCount,minimalWordCountLimit,remarkableWordCountLimit)
 
+  
     //build comment body
-    var comment = createCommentBody(file.name, wordCount, wordCountReached)
+    var comment = createCommentBody(file.name, wordCount, wordCountReached, timeOfSubmission, deadline)
     buildAndPostComment(issue_number,comment, octokit)
 
     changed_files = github.context.payload.pull_request.changed_files;
@@ -97,6 +102,14 @@ var getReadme = async function(octokit, owner, repo, dir, callingBranch='master'
  
 }
 
+function checkDeadline(deadline, timeOfSubmission) {
+  if (deadline > timeOfSubmission) {
+    return true
+  } else {
+    return false
+  }
+}
+
 function getWordCountVerdict(wordCount, acceptableLimit, remarkableLimit) {
   let wc = parseInt(wordCount);
   let verdict = (wc < acceptableLimit) ? 'no': (wc >= remarkableLimit ? 'yes, remarkable' : 'yes');
@@ -104,11 +117,14 @@ function getWordCountVerdict(wordCount, acceptableLimit, remarkableLimit) {
 }
 
 //TODO: add time aspect
-function createCommentBody(filename, wc, verdict ) {
-  let comment = 'Checking wordcount for feedback given';
+function createCommentBody(filename, wc, verdict, timeApproved, timeOfSubmission, deadline ) {
+  let comment = 'Checking wordcount and time of submission for feedback given';
   let fileString = `File checked: ${filename}. \n`;
-  let wordCountString = `Substantiated: ${verdict} (${wc} words) \n`;
-  comment = comment + fileString + wordCountString;
+  let wordCountString = `Feedback is substantiated: ${verdict} (${wc} words) \n`;
+  //check time of submission
+  let timeApproved = checkDeadline(deadline,timeOfSubmission)
+  let timeCheckString = timeApproved? `The submission is delivered before the deadline \n` : `the submission is delivered after the deadline\n`
+  comment = comment + fileString + wordCountString +  timeCheckString;
   return comment;
 }
 

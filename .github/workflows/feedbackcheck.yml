@@ -21,6 +21,7 @@ jobs:
         repo-token: ${{secrets.GITHUB_TOKEN}}
         minimal-wordcount: 500
         remarkable-wordcount: 1000
+        deadline: '2021-04-31T23:59Z'
     # Use the output from the `hello` step
     - name: Print number of changed files
       run: |

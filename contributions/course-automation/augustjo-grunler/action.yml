@@ -9,7 +9,10 @@ inputs:
     required: true
   remarkable-wordcount:
     description: the limit for remarkable feedback
-    required: true    
+    required: true  
+  deadline:
+    description: deadline of the task tha requires feedback (essay,tutorial)
+    required: true  
 outputs:
   changed_files: # id of output
     description: 'The number of files changed in the pull request'
