@@ -51,7 +51,7 @@ function getMDwordCount(string) {
 }
 
 var getReadme = function(octokit, owner, repo, dir, callingBranch='master') {
-  return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/{ref}/readme/{dir}', {
+  return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/readme/{dir}/{ref}', {
     owner: owner,
     repo: repo,
     dir: dir,
