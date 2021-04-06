@@ -1,5 +1,4 @@
 name: workflow
-
 on: 
   pull_request:
     paths:
