@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - '**/feedback/**/README.md'
-      - '**/course-automation/**'
+      #- '**/course-automation/**'
 #todo: add branch check?
 jobs:
   action:
