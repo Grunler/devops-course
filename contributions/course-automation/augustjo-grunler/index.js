@@ -9,22 +9,21 @@ async function main() {
     const minimalWordCountLimit = core.getInput('minimal-wordcount')
     const remarkableWordCountLimit = core.getInput('remarkable-wordcount')
     const octokit = github.getOctokit(token);
+
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2);
     //console.log(`The event payload: ${payload}`);
+    // extract required information from payload from github
     const owner = github.context.payload.repository.owner.login;
     console.log(`The owner of the repo is ${owner}`)
-    
-
     const branch = github.context.payload.pull_request.head.ref
     console.log(`the branch is: ${branch}`)
-
     var issue_number = github.context.payload.pull_request._links.issue.href.split("/")
     issue_number = issue_number[issue_number.length-1]
-    
     const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
 
+    // get changed files from pullrequest
     var files = await getChangedfiles(owner, repoName, issue_number, octokit)
     files = files.filter(file => file.filename.includes('README.md'))
     files = files.filter(file => file.filename.includes('feedback'))
@@ -35,13 +34,14 @@ async function main() {
     dir = dir.reduce(reducer)
     console.log(dir)
   
-    // Extract The file with the feedback
+    // Extract The readme file with the feedback from the correct directory
     var file = await getReadme(octokit,owner,repoName,dir,branch)
     const path = file.path
     console.log(`path is: ${path}`)
     core.setOutput("readme_path", path)
     var rawText = atob(file.content)
     console.log(`This is the rawtext of the readme: ${rawText}`)
+    //get wordcount of feedback
     var wordCount = getMDwordCount(rawText)
     var wordCountReached = getWordCountVerdict(wordCount,minimalWordCountLimit,remarkableWordCountLimit)
 
@@ -63,6 +63,7 @@ function getMDwordCount(string) {
   return str.split(" ").length;
 }
 
+// this function gets all the changed files in a pullrequest
 var getChangedfiles = async function(owner,repo,issue_number,octokit) {
   return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/files', {
     owner: owner,
@@ -77,6 +78,7 @@ var getChangedfiles = async function(owner,repo,issue_number,octokit) {
 })
 }
 
+// this function fetches a readme in a specific directory on github
 var getReadme = async function(octokit, owner, repo, dir, callingBranch='master') {
   return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/readme/{dir}', {
     owner: owner,
@@ -101,14 +103,13 @@ function getWordCountVerdict(wordCount, acceptableLimit, remarkableLimit) {
 
 //TODO: add time aspect
 function createCommentBody(filename, wc, verdict ) {
-  let comment = '';
+  let comment = 'Checking wordcount for feedback given';
   let fileString = `File checked: ${filename}. \n`;
   let wordCountString = `Substantiated: ${verdict} (${wc} words) \n`;
   comment = comment + fileString + wordCountString;
   return comment;
 }
 
-//TODO: issue number
 async function buildAndPostComment(issue_number, message, octokit) {
   const comment = await octokit.issues.createComment({
     owner: github.context.repo.owner,
