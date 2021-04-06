@@ -16,7 +16,7 @@ We plan on making a Github action that automates part of the evaluation for the 
 This will include checks to see that the feedback exceeds the minimum word limit of 500 words, that it meets deadline requirements and that there are pointers to additional material.
 We will also implement the possible checks for a remarkable submission, such as the feedback surpassing 1000 words or being submitted within 24 hours.
 
-## Submission
+## Submissions
 
 We have created a github action that can be used to automate some part of the evaluation of the feedback task. When people in the KTH course DevOps give feedback to their fellow students, That feedback has to pass certain requirements. We have focused on 2 of these requirements: 
 1. The feedback is substasiated meaning that the wordcount is at least 500 words, and if the wordcount is above 1000 then the feedback is considerd remarkable. 
