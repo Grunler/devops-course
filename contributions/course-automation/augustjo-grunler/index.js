@@ -24,15 +24,21 @@ async function main() {
     
     const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
-
-    var files = await getChangedfiles(owner, repoName, issue_number, octokit)
-    files = files.filter(file => file.filename.includes('README.md'))
-    files = files.filter(file => file.filename.includes('feedback'))
-    let dir = files[0].filename.split('/')
-    const reducer = (accumulator, word) => accumulator + "/" + word;
-    dir.pop()
-    dir = dir.reduce(reducer)
-    console.log(dir)
+    
+    try {
+      var files = await getChangedfiles(owner, repoName, issue_number, octokit)
+      files = files.filter(file => file.filename.includes('README.md'))
+      files = files.filter(file => file.filename.includes('feedback'))
+      let dir = files[0].filename.split('/')
+      const reducer = (accumulator, word) => accumulator + "/" + word;
+      dir.pop()
+      dir = dir.reduce(reducer)
+      console.log(dir)
+    } catch (error) {
+      console.log(error)
+    }
+    
+    
 
 
     // Extract The file with the feedback
