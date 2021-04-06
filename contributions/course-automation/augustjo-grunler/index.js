@@ -27,7 +27,7 @@ async function main() {
     console.log(`Pull request to: ${repoName}`)
 
     var files = await getChangedfiles(owner, repoName, issue_number, octokit)
-    files = files.filter(file => file.filename.contains('README.md'))
+    files = files.filter(file => file.filename.includes('README.md'))
     console.log(files)
 
 
