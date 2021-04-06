@@ -5,19 +5,14 @@ inputs:
     description: 'Token for the repo'
     required: true
   minimal-wordcount:
-    description: The minmal wordcount requirement for acceptable feedback
+    description: The minimal word count requirement for acceptable feedback
     required: true
   remarkable-wordcount:
-    description: the limit for remarkable feedback
+    description: the minimal word count requirement for remarkable feedback
     required: true  
   deadline:
-    description: deadline of the task tha requires feedback (essay,tutorial)
+    description: deadline for the feedback as a string in the ISO 8601 format
     required: true  
-outputs:
-  changed_files: # id of output
-    description: 'The number of files changed in the pull request'
-  readme_path:
-    description: path of readme to wordcheck
 runs:
   using: 'node12'
   main: 'index.js'

@@ -11,18 +11,18 @@ async function main() {
     const remarkableWordCountLimit = core.getInput('remarkable-wordcount')
     const deadline = new Date(core.getInput('deadline'))
     const octokit = github.getOctokit(token);
+    const repoName = github.context.repo.repo
+    const payload = JSON.stringify(github.context.payload, undefined, 2);
+    const owner = github.context.payload.repository.owner.login;
+    const branch = github.context.payload.pull_request.head.ref
+
 
     // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2);
-    //console.log(`The event payload: ${payload}`);
     // extract required information from payload from github
-    const owner = github.context.payload.repository.owner.login;
     console.log(`The owner of the repo is ${owner}`)
-    const branch = github.context.payload.pull_request.head.ref
     console.log(`the branch is: ${branch}`)
     var issue_number = github.context.payload.pull_request._links.issue.href.split("/")
     issue_number = issue_number[issue_number.length-1]
-    const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
     let timeOfSubmission = github.context.payload.pull_request.head.repo.pushed_at
     timeOfSubmission = new Date(timeOfSubmission)
@@ -45,6 +45,7 @@ async function main() {
     core.setOutput("readme_path", path)
     var rawText = atob(file.content)
     console.log(`This is the rawtext of the readme: ${rawText}`)
+    
     //get wordcount of feedback
     var wordCount = getMDwordCount(rawText)
     var wordCountReached = getWordCountVerdict(wordCount,minimalWordCountLimit,remarkableWordCountLimit)
@@ -54,8 +55,6 @@ async function main() {
     var comment = createCommentBody(file.name, path, wordCount, wordCountReached, timeOfSubmission, deadline)
     buildAndPostComment(issue_number,comment, octokit)
 
-    changed_files = github.context.payload.pull_request.changed_files;
-    core.setOutput('changed_files', changed_files); 
   } catch (error) {
     core.setFailed(error.message);
   } 
