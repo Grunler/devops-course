@@ -3,8 +3,6 @@ on:
   pull_request:
     paths:
       - '**/feedback/**/README.md'
-      #- '**/course-automation/**'
-#todo: add branch check?
 jobs:
   action:
     runs-on: ubuntu-latest
@@ -20,4 +18,4 @@ jobs:
         repo-token: ${{secrets.GITHUB_TOKEN}}
         minimal-wordcount: 500
         remarkable-wordcount: 1000
-        deadline: '2021-04-31T23:59Z'
+        deadline: '2021-04-27T23:59Z'
