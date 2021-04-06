@@ -5,7 +5,7 @@ var atob = require('atob');
 
 async function main() {
   try {
-    // `who-to-greet` input defined in action metadata file
+    // Inputs
     const token = core.getInput('repo-token');
     const minimalWordCountLimit = core.getInput('minimal-wordcount')
     const remarkableWordCountLimit = core.getInput('remarkable-wordcount')
@@ -118,13 +118,13 @@ function getWordCountVerdict(wordCount, acceptableLimit, remarkableLimit) {
 
 function createCommentBody(filename, path, wc, verdict, timeOfSubmission, deadline ) {
   let comment = 'Checking basic feedback requirements. \n';
-  let fileString = `**File checked**: ${filename}. (${path}) \n`;
+  let fileString = `**File checked**: ${filename} (${path}). \n`;
   fileString += ` **Path:** ${path} \n `;
-  let wordCountString = `**Passes word limit**: ${verdict} (${wc} words.) \n`;
+  let wordCountString = `**Passes word limit**: ${verdict} (${wc} words). \n`;
   //check time of submission
   let timeApproved = checkDeadline(deadline,timeOfSubmission)
   let timeCheckString = timeApproved? `The feedback was submitted in time` : `The feedback was submitted after the deadline`
-  timeCheckString += ` (submitted at: ${timeOfSubmission.toString()}.) \n`;
+  timeCheckString += ` (submitted at: ${timeOfSubmission.toString()}). \n`;
   comment = comment + fileString + wordCountString +  timeCheckString;
   return comment;
 }
