@@ -27,7 +27,10 @@ async function main() {
     var files = await getChangedfiles(owner, repoName, issue_number, octokit)
     files = files.filter(file => file.filename.includes('README.md'))
     files = files.filter(file => file.filename.includes('feedback'))
-    const dir = files[0].filename.substring(0,files[0].filename.length - 9)
+    const dir = files[0].filename.split('/')
+    const reducer = (accumulator, word) => accumulator + "/" + word;
+    dir.pop()
+    dir = dir.reduce(reducer)
     console.log(dir)
 
 
