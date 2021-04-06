@@ -123,7 +123,7 @@ function createCommentBody(filename, path, wc, verdict, timeOfSubmission, deadli
   //check time of submission
   let timeApproved = checkDeadline(deadline,timeOfSubmission)
   let timeCheckString = timeApproved? `The submission is delivered before the deadline` : `the submission is delivered after the deadline`
-  timeCheckString += ` (submitted at: ${timeofsubmission.toString()}) \n` 
+  timeCheckString += ` (submitted at: ${timeOfSubmission.toString()}) \n` 
   comment = comment + fileString + wordCountString +  timeCheckString;
   return comment;
 }
