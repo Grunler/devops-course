@@ -16,13 +16,15 @@ async function main() {
     console.log(`The owner of the repo is ${owner}`)
     const dir = '/contributions/course-automation/augustjo-grunler'
 
+    const branch = github.context.payload.pull_request.head.ref
+
     var issue_number = github.context.payload.pull_request._links.issue.href.split("/")
     issue_number = issue_number[issue_number.length-1]
     
     const repoName = github.context.repo.repo
     console.log(`Pull request to: ${repoName}`)
     // Extract The file with the feedback
-    var file = await getReadme(octokit,owner,repoName,dir)
+    var file = await getReadme(octokit,owner,repoName,dir,branch)
     const path = file.path
     console.log(`path is: ${path}`)
     core.setOutput("readme_path", path)
@@ -49,10 +51,11 @@ function getMDwordCount(string) {
 }
 
 var getReadme = function(octokit, owner, repo, dir, callingBranch='master') {
-  return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/readme/{dir}', {
+  return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/{ref}/readme/{dir}', {
     owner: owner,
     repo: repo,
-    dir: dir
+    dir: dir,
+    ref: callingBranch
   }).then(file =>{ 
     x = atob(file.data.content)
     resolve(file.data)
