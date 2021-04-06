@@ -60,6 +60,7 @@ function getMDwordCount(string) {
   str = string.replace(/([#*>+|/_@±/\[\]\\{}<-`]+)/g,"");
   str = str.replace(/(\s)+/g," ");
   str.trim();
+  console.log(`String: ${str} `);
   return str.split(" ").length;
 }
 
