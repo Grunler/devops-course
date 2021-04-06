@@ -58,7 +58,7 @@ jobs:
 ````
 
 The yaml might be changed to trigger the action on other events or to specify certain branches or paths.
-The uses path will only work for the course when the code has been merged into the repo. You might also want to specify a branch or tag.
+The uses path will only work for the course when the code has been merged into the repo. In some cases you might also want to specify a branch or tag.
 
 ### Course-specific
 The action triggers on a PR when the files that are modified matches this path in the devops structure `**/feedback/**/README.md`. 
