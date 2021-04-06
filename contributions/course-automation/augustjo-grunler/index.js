@@ -28,6 +28,7 @@ async function main() {
 
     var files = await getChangedfiles(owner, repoName, issue_number, octokit)
     files = files.filter(file => file.filename.includes('README.md'))
+    files = files.filter(file => file.filename.includes('course-automation'))
     console.log(files)
 
 
