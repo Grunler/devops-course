@@ -18,11 +18,14 @@ We will also implement the possible checks for a remarkable submission, such as 
 
 ## Submission
 
-We have created a github action that can be used to automate some part of the evaluation of the feedback task. When people in the KTH course DevOps give feedback to their fellow students, That feedback has to pass certain requirements. We have focused on 2 of these requirements: 
-1. The feedback is substasiated meaning that the wordcount is at least 500 words, and if the wordcount is above 1000 then the feedback is considerd remarkable. 
-2. The feedback should be submited 4 days before the submission deadline of the task.
+We have created a Github Action that can be used to automate some part of the evaluation of the feedback task. When people in the KTH course DevOps give feedback to their fellow students, that feedback has to pass certain requirements. We have focused on 2 of these requirements: 
+1. The feedback is substantiated meaning that the word count is at least 500 words, and if the word count is above 1000 then the feedback is considered remarkable. The Github Action uses input variables so that the limits can be modified in future course offerings as required. 
+2. The feedback should be submited 4 days before the submission deadline of the task. As this deadline might also be subject to change in future course offerings we decided to let the course administration set the deadline for the **feedback** as an input to the Github Action.
 
-The action triggers when a pullrequest is made or synchronized and when the files that are modified matches this path in the devops structure `**/feedback/**/README.md`. 
+
+
+
+The action triggers when a pull request is made or synchronized and when the files that are modified matches this path in the devops structure `**/feedback/**/README.md`. 
 This means that if someone adds their feedback in the README (which they should) of their folder in the feedback folder, this action will trigger and check the requirements. After the feedback is checked by the action the action will produce a pr comment on the person submiting feedback's pr stating weather the feedback is sufficient or not.
 
 ## Usage
@@ -47,12 +50,12 @@ jobs:
         repo-token: ${{secrets.GITHUB_TOKEN}}
         minimal-wordcount: 500
         remarkable-wordcount: 1000
-        deadline: '2021-04-31T23:59Z'
+        deadline: '2021-04-27T23:59Z'
 ````
 The inputs of the actions are:
 | Name                | Description                                                                                                    | Required |
 |---------------------|----------------------------------------------------------------------------------------------------------------|----------|
-| Repo-token          | The token is necessary in order to make pr comments and get access to data from github                         | True     |
+| repo-token          | The token is necessary in order to create comments on the PR and get access to data from github                | True     |
 | minimal-wordcount   | The minimal wordcount required to pass the check                                                               | True     |
-| remakable-wordcount | The wordcountlimit for whats considerd remarkable feedback                                                     | True     |
-| deadline            | The deadline of tasks that you are able to submit feedback on. Can be changed depending on different deadlines on later course offerings. The format of the deadline should be ISO8601| True     |
+| remakarble-wordcount| The word count limit for remarkable feedback                                                                   | True     |
+| deadline            | The deadline of the feedback task. The format of the deadline should be in ISO8601                             | True     |
