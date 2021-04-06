@@ -4,7 +4,7 @@
 * four
 * five six seven
 
-8 nine ten 11 twelve.
+8 nine ten 11 twelve..
 
 ## thirteen [ ]
 
