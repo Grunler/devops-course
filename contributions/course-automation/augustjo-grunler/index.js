@@ -112,13 +112,13 @@ function checkDeadline(deadline, timeOfSubmission) {
 
 function getWordCountVerdict(wordCount, acceptableLimit, remarkableLimit) {
   let wc = parseInt(wordCount);
-  let verdict = (wc < acceptableLimit) ? 'no': (wc >= remarkableLimit ? 'yes, remarkable' : 'yes');
+  let verdict = (wc < acceptableLimit) ? 'no it is not': (wc >= remarkableLimit ? 'yes it is remarkable!' : 'yes it is');
   return verdict;
 }
 
 //TODO: add time aspect
 function createCommentBody(filename, wc, verdict, timeOfSubmission, deadline ) {
-  let comment = 'Checking wordcount and time of submission for feedback given';
+  let comment = 'Checking wordcount and time of submission for feedback given\n';
   let fileString = `File checked: ${filename}. \n`;
   let wordCountString = `Feedback is substantiated: ${verdict} (${wc} words) \n`;
   //check time of submission
