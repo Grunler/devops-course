@@ -29,8 +29,18 @@ The action triggers when a pull request is made or synchronized and when the fil
 This means that if someone adds their feedback in the README (which they should) of their folder in the feedback folder, this action will trigger and check the requirements. After the feedback is checked by the action the action will produce a pr comment on the person submiting feedback's pr stating weather the feedback is sufficient or not.
 
 ## Usage
-### workflow file
-To use the action create a file in your project (example `.github/workflows/feedbackcheck.yml`) and include these lines of code.
+### Inputs
+The inputs of the actions are:
+| Name                | Description                                                                                                    | Required |
+|---------------------|----------------------------------------------------------------------------------------------------------------|----------|
+| repo-token          | The token is necessary in order to create comments on the PR and get access to data from github                | True     |
+| minimal-wordcount   | The minimal wordcount required to pass the check                                                               | True     |
+| remakarble-wordcount| The word count limit for remarkable feedback                                                                   | True     |
+| deadline            | The deadline of the feedback task. The format of the deadline should be in ISO8601                             | True     |
+
+
+###  Example workflow file
+To use the action you may create a file in your project (example `.github/workflows/feedbackcheck.yml`) and include these lines of code.
 ````yml
 name: Feedback-check
 on: 
@@ -52,10 +62,6 @@ jobs:
         remarkable-wordcount: 1000
         deadline: '2021-04-27T23:59Z'
 ````
-The inputs of the actions are:
-| Name                | Description                                                                                                    | Required |
-|---------------------|----------------------------------------------------------------------------------------------------------------|----------|
-| repo-token          | The token is necessary in order to create comments on the PR and get access to data from github                | True     |
-| minimal-wordcount   | The minimal wordcount required to pass the check                                                               | True     |
-| remakarble-wordcount| The word count limit for remarkable feedback                                                                   | True     |
-| deadline            | The deadline of the feedback task. The format of the deadline should be in ISO8601                             | True     |
+
+The yaml might be changed to trigger the action on other events or to specify certain branches or paths.
+The uses path will only work for the course when the code has been merged into the repo. You might also want to specify a branch or tag.
