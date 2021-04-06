@@ -3,7 +3,7 @@ name: workflow
 on: 
   pull_request:
     paths:
-      - '/contributions/course-automation/augustjo-grunler/README.md'
+      - '/contributions/**'
 #todo: add branch check?
 jobs:
   action:
