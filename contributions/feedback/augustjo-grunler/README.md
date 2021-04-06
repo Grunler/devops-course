@@ -4,7 +4,7 @@ Text
 * List
 * List word 2
 
-Adding some more text aagain.
+Adding some more text again.
 
 ## Hello
 
