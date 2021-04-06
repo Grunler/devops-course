@@ -57,9 +57,11 @@ async function main() {
 }
 
 function getMDwordCount(string) {
-  str = string.replace(/([#*>+|/_@±/\[\]\\{}<-`]+)/g,"");
+  str = string.replace(/([#\*>\+|/_@±/\[\]\\{}<±\-`]+)/g,"");
+  console.log(`String after first replace: ${str} `);
   str = str.replace(/(\s)+/g," ");
-  str.trim();
+  str = str.trim();
+  console.log(`String: ${str} `);
   return str.split(" ").length;
 }
 
