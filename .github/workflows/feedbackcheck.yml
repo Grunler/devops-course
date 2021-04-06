@@ -4,7 +4,7 @@ on:
   pull_request:
     type: [created, synchronize]
     paths:
-      - 'contributions/feedback/**/README.md'
+      - 'contributions/feedback/augustjo-grunler/README.md'
 #todo: add branch check?
 jobs:
   action:
