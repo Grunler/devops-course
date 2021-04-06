@@ -4,12 +4,12 @@
 August Jönsson: 
 
 Github: Augustjon  
-KTH: augustjo@kth.se
+KTH.se: augustjo
 
 Daniel Grünler:
 
 Github: Grunler  
-KTH: grunler@kth.se
+KTH.se: grunler
 
 ## Proposal:
 We plan on making a Github action that automates part of the evaluation for the feedback task. 
