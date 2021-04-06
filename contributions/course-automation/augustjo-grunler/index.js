@@ -27,6 +27,7 @@ async function main() {
     console.log(`path is: ${path}`)
     core.setOutput("readme_path", path)
     var rawText = atob(file.content)
+    console.log(`This is the rawtext of the readme: ${rawText}`)
     var wordCount = getMDwordCount(rawText)
     var wordCountReached = getWordCountVerdict(wordCount,minimalWordCountLimit,remarkableWordCountLimit)
 

@@ -17,4 +17,8 @@ KTH: grunler (@kth.se)
 We plan on makign a Github action that automates part of the evaluation for the feedback task. 
 This will include checks to see that the feedback exceeds the minimum word limit of 500 words, that it meets deadline requirements and that there are pointers to additional material.
 We will also implement the possible checks for a remarkable submission, such as the feedback surpassing 1000 words or being submitted within 24 hours.
+test test
+test
+test
+test
 
