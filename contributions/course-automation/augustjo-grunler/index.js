@@ -14,9 +14,7 @@ async function main() {
     //console.log(`The event payload: ${payload}`);
     const owner = github.context.payload.repository.owner.login;
     console.log(`The owner of the repo is ${owner}`)
-    const contents_url = github.context.payload.pull_request.base.repo.contents_url
-    console.log(`the URL or the contents is ${contents_url}`)
-    const dir = '**/feedback/**/'
+    
 
     const branch = github.context.payload.pull_request.head.ref
 
@@ -28,8 +26,9 @@ async function main() {
 
     var files = await getChangedfiles(owner, repoName, issue_number, octokit)
     files = files.filter(file => file.filename.includes('README.md'))
-    files = files.filter(file => file.filename.includes('course-automation'))
-    console.log(files)
+    files = files.filter(file => file.filename.includes('feedback'))
+    const dir = files[0].filename.substring(0,files[0].filename.length - 9)
+    console.log(dir)
 
 
     // Extract The file with the feedback
