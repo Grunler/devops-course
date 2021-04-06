@@ -17,6 +17,7 @@ async function main() {
     
 
     const branch = github.context.payload.pull_request.head.ref
+    console.log(`the branch is: ${branch}`)
 
     var issue_number = github.context.payload.pull_request._links.issue.href.split("/")
     issue_number = issue_number[issue_number.length-1]
@@ -61,7 +62,7 @@ function getMDwordCount(string) {
   return str.split(" ").length;
 }
 
-var getChangedfiles = function(owner,repo,issue_number,octokit) {
+var getChangedfiles = async function(owner,repo,issue_number,octokit) {
   return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/pulls/{pull_number}/files', {
     owner: owner,
     repo: repo,
@@ -75,7 +76,7 @@ var getChangedfiles = function(owner,repo,issue_number,octokit) {
 })
 }
 
-var getReadme = function(octokit, owner, repo, dir, callingBranch='master') {
+var getReadme = async function(octokit, owner, repo, dir, callingBranch='master') {
   return new Promise((resolve,reject) => {octokit.request('GET /repos/{owner}/{repo}/readme/{dir}', {
     owner: owner,
     repo: repo,
