@@ -1,0 +1,19 @@
+name: Feedback-check
+on: 
+  pull_request:
+    paths:
+      - '**/feedback/**/README.md'
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: check feedback
+      id: feedback
+      uses: Augustjon/Feedbackcheck-action@Action
+      with:
+        repo-token: ${{secrets.GITHUB_TOKEN}}
+        minimal-wordcount: 500
+        remarkable-wordcount: 1000
+        deadline: '2021-04-27T23:59Z'
