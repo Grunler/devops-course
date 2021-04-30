@@ -1,11 +1,5 @@
 # Feedback for "How to setup a CI/CD pipeline for a react application", part 2:
 
-## Feedback member:
-
-Daniel Grünler (grunler@kth.se)
-
-GitHub: [@Grunler](https://github.com/Grunler)
-
 ## Overall impression:
 
 I enjoyed reading and executing this tutorial. I had not used Heroku or CircleCI before but apart from some unfortunate error on the CircleCI side I had no issue following the tutorial and I enjoyed learning something new.
