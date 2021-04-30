@@ -1,15 +1,19 @@
 # Course automation: Check Feedback Requirements
 
-## Members
+### Members
 August Jönsson: 
+
 
 Github: Augustjon  
 KTH.se: augustjo
 
+
 Daniel Grünler:
+
 
 Github: Grunler  
 KTH.se: grunler
+
 
 ## Proposal:
 We plan on making a Github action that automates part of the evaluation for the feedback task. 
